@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const history = require('connect-history-api-fallback');
+const path = require('path');
 
 const app = express();
 
@@ -14,6 +16,12 @@ app.get('/', (req, res) => {
         message: 'Radi nesto'
     });
 });
+
+const staticDir = express.static(path.join(__dirname, 'dist'));
+
+app.use(staticDir);
+app.use(history);
+app.use(staticDir);
 
 app.listen(2999, () => {
     console.log('Port 2999 aktivan');

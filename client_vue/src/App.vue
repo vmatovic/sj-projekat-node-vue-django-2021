@@ -2,11 +2,25 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/edit">New Message</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import { mapActions } from 'vuex';
+export default {
+  name: 'App',
+  methods: {
+    ...mapActions(['load_messages'])
+
+  },
+  mounted: function() {
+    this.load_messages();
+  }
+}
+</script>
 
 <style>
 #app {
