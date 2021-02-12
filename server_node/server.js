@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const history = require('connect-history-api-fallback');
+const apiRouter = require('./routes');
 const path = require('path');
 
 const app = express();
@@ -10,6 +11,8 @@ const app = express();
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use('/api', apiRouter);
 
 app.get('/', (req, res) => {
     res.json({

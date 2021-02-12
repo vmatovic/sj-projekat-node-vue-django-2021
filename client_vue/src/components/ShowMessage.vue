@@ -4,7 +4,7 @@
 
 <script>
 export default {
-    name: "MessageList"    
+    name: "ShowMessage"    
 }
 </script>
 
