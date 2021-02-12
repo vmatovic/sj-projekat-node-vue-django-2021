@@ -1,16 +1,19 @@
 <template>
   <div id="app">
+    <Header />
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/edit">New Message</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import Header from './components/Header.vue';
 export default {
+  components: { Header },
   name: 'App',
   methods: {
     ...mapActions(['load_messages'])
