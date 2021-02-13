@@ -6,6 +6,8 @@ import LogIn from '@/views/LogIn.vue'
 import Message from '@/views/Message.vue'
 import NewMessage from '@/views/NewMessage.vue'
 import Materijali from '@/views/Materijali.vue'
+import Dugmici from '@/views/Dugmici.vue'
+import Namestaj from '@/views/MaterijaliNamestaj.vue'
 
 Vue.use(VueRouter)
 
@@ -19,6 +21,16 @@ const routes = [
     path: '/materijali',
     name: 'Materijali',
     component: Materijali
+  },
+  {
+    path: '/dugmici',
+    name: 'Dugmici',
+    component: Dugmici
+  },
+  {
+    path: '/namestaj',
+    name: 'Namestaj',
+    component: Namestaj
   },
   {
     path: '/sign-up',
