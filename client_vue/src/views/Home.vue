@@ -1,21 +1,33 @@
 <template>
     <div id="app">
-        <b-container>
-            <b-row>
-                <b-col cm="6">
-                    <MessageList />
-                </b-col>
-            </b-row>
-        </b-container>
+        <h1>Cao {{ username }}</h1>
+        <p>{{ secretMessage }}</p>
+        <input type="button" @click="logout" value="Log out" />
     </div>
 </template>
 
 <script>
-import MessageList from '@/components/MessageList'
+import AuthService from '@/services/AuthService.js'
 export default {
     name: "Home",
-    components: {
-        MessageList
+    data() {
+        return {
+            secretMessage: '',
+            username: ''
+        };
+    },
+    async created() {
+        if (!this.$store.getters.isLoggedIn) {
+            this.$router.push('/login');
+        }
+        this.username = this.$store.getters.getUsername;
+        this.secretMessage = await AuthService.getSecret();
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch('logout');
+            this.$router.push('/login');
+        }
     }
 }
 </script>

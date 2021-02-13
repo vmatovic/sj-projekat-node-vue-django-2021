@@ -17,7 +17,7 @@ export default {
 
     getSecret() {
         return axios
-            .get(url + 'sercet/')
+            .get(url + 'secret/')
             .then(res => res.data);
     }
 };
