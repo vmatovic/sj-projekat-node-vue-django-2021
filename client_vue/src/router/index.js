@@ -5,6 +5,7 @@ import SignUp from '@/views/SignUp.vue'
 import LogIn from '@/views/LogIn.vue'
 import Message from '@/views/Message.vue'
 import NewMessage from '@/views/NewMessage.vue'
+import Materijali from '@/views/Materijali.vue'
 
 Vue.use(VueRouter)
 
@@ -13,6 +14,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/materijali',
+    name: 'Materijali',
+    component: Materijali
   },
   {
     path: '/sign-up',

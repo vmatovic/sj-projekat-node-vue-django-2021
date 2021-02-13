@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Axios from 'axios'
 const url = 'http://localhost:2999/api/';
 
 export default {

@@ -96,6 +96,46 @@ router.post('/login', (req, res, next) => {
     );
 });
 
+router.get('/materijali', (req, res, next) => {
+    db.query('SELECT * FROM materijali;',
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return res.status(200).send({
+            res: result
+        });
+    });
+});
+
+router.get('/dugmici', (req, res, next) => {
+    db.query('SELECT * FROM dugmici;',
+    (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        return res.status(200).send({
+            res: result
+        });
+    });
+});
+
+router.get('/namestaj', (req, res, next) => {
+    db.query('SELECT * FROM materijali_namestaj;',
+    (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        return res.status(200).send({
+            res: result
+        });
+    });
+});
+
 router.get('/secret', userMiddleware.isLoggedIn, (req, res, next) => {
     res.send('Hipoteticki, samo bi ulogovani korisnici trebali to da vide.');
 });

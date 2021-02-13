@@ -9,9 +9,9 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <b-dropdown id="dropdown-1" text="Izaberite kategoriju" variant="primary" class="m-md-2">
-                        <b-dropdown-item>First Action</b-dropdown-item>
-                        <b-dropdown-item>Second Action</b-dropdown-item>
-                        <b-dropdown-item>Third Action</b-dropdown-item>
+                        <b-dropdown-item>Materijali</b-dropdown-item>
+                        <b-dropdown-item>Dugmici</b-dropdown-item>
+                        <b-dropdown-item>Materijali za namestaj</b-dropdown-item>
                         <b-dropdown-divider></b-dropdown-divider>
                         <b-dropdown-item active>Active action</b-dropdown-item>
                         <b-dropdown-item disabled>Disabled action</b-dropdown-item>
