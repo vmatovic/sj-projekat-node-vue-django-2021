@@ -6,9 +6,11 @@
             <h5>Boja: {{matstat.boja}}</h5>
             <h5>Preostala duzina: {{matstat.preostala_duzina}}m</h5>
             <h5>Cena po metru: {{matstat.cena_po_metru}} din</h5>
+            <b-button variant="outline-primary" v-if="this.$store.getters.isLoggedIn">🛒</b-button>
+            <b-button variant="outline-primary" v-else disabled>🛒</b-button>
         </div>
         <br>
-        <div>
+        <div v-if="this.$store.getters.isLoggedIn">
             <b-form-textarea
             id="textarea"
             v-model="text"
@@ -16,9 +18,27 @@
             rows="3"
             max-rows="6"
             ></b-form-textarea>
-
-            <pre class="mt-3 mb-0">{{ text }}</pre>
             <b-button @click="postComment" variant="success">Objavite komentar</b-button>
+        </div>
+        <div v-else>
+            <b-form-textarea
+            id="textarea"
+            v-model="text"
+            placeholder="Morate da se ulogujete da biste ostavili komentar!"
+            rows="3"
+            max-rows="6"
+            disabled
+            ></b-form-textarea>
+        </div>
+        <br>
+        <br>
+        <div class="text-left" v-for="comment in comments" :key="comment.komentarID">
+            <p> {{ comment.username }} </p>
+            <p> {{ comment.tekst }} </p>
+            <small> {{ comment.postavljeno_datuma }} </small>
+            <br>
+            <hr>
+            <br>
         </div>
     </div>
 </template>
@@ -32,16 +52,22 @@ export default {
         return {
             matstat: {
             },
-            text: ''
+            text: '',
+            comments: []
         };
     },
     mounted() {
         this.matdata();
+        this.commentsData();
     },
     methods: {
         async matdata() {
             const { data } = await axios.get(`http://localhost:2999/api/materijal/${this.$route.params.id}`);
             this.matstat = data.res;
+        },
+        async commentsData() {
+            const { data } = await axios.get(`http://localhost:2999/api/materijal/komentari/${this.$route.params.id}`);
+            this.comments = data.res;
         },
         postComment() {
             const fullComment = {
@@ -51,8 +77,11 @@ export default {
             };
 
             axios.post('http://localhost:2999/api/komentar', fullComment)
-                .then((res) => { this.$router.push(`/materijal/${this.$route.params.id}`); })
-                .catch((err) => console.log(err));
+                .then((res) => { 
+                        
+                    this.$router.push(`/materijal/${this.$route.params.id}`);
+
+                }).catch((err) => console.log(err));
         }
     }
 }

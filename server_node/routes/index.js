@@ -138,6 +138,34 @@ router.post('/komentar', (req, res, next) => {
     });
 });
 
+router.get('/materijal/komentari/:id', (req, res, next) => {
+    db.query(`SELECT korisnici.username, komentari.tekst, komentari.postavljeno_datuma FROM komentari INNER JOIN korisnici ON komentari.korisnikID = korisnici.id WHERE komentari.materijalID = ${req.params.id} ORDER BY komentari.postavljeno_datuma DESC;`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return res.status(200).send({
+            res: result
+        });
+    });
+});
+
+router.get('/profil/komentari/:id', (req, res, next) => {
+    db.query(`SELECT materijali.naziv, materijali.boja, komentari.tekst, komentari.postavljeno_datuma FROM komentari INNER JOIN materijali ON komentari.materijalID = materijali.materijalID WHERE komentari.korisnikID LIKE '${req.params.id}' ORDER BY komentari.postavljeno_datuma DESC;`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return res.status(200).send({
+            res: result
+        });
+    });
+});
+
 router.get('/dugmici', (req, res, next) => {
     db.query('SELECT * FROM dugmici;',
     (err, result) => {

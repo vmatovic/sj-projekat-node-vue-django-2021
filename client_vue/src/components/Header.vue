@@ -11,7 +11,7 @@
                     <b-dropdown id="dropdown-1" text="Izaberite kategoriju" variant="primary" class="m-md-2">
                         <b-dropdown-item href="/materijali">Materijali</b-dropdown-item>
                         <b-dropdown-item href="/dugmici">Dugmici</b-dropdown-item>
-                        <b-dropdown-item href="/namestaj">Materijali za namestaj</b-dropdown-item>
+                        <b-dropdown-item href="/namestaj">Mebl</b-dropdown-item>
                     </b-dropdown>
                 </li>
             </ul>
@@ -27,8 +27,11 @@
                     <b-dropdown-header id="dropdown-header-label">
                     {{ this.$store.getters.getUser.username }}
                     </b-dropdown-header>
-                    <b-dropdown-item-button aria-describedby="dropdown-header-label">
+                    <b-dropdown-item-button @click="gotoProfilePage" aria-describedby="dropdown-header-label">
                     Profil
+                    </b-dropdown-item-button>
+                    <b-dropdown-item-button @click="gotoProfilePage" aria-describedby="dropdown-header-label">
+                    Narudzbine
                     </b-dropdown-item-button>
                     <b-dropdown-item-button @click="logout" aria-describedby="dropdown-header-label">
                     Odjava
@@ -51,6 +54,9 @@ export default {
         logout() {
             this.$store.dispatch('logout');
             this.$router.push('/login');
+        },
+        gotoProfilePage() {
+            this.$router.push('/profil');
         }
     }
 }

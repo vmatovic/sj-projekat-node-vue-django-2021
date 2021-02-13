@@ -3,8 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import SignUp from '@/views/SignUp.vue'
 import LogIn from '@/views/LogIn.vue'
-import Message from '@/views/Message.vue'
-import NewMessage from '@/views/NewMessage.vue'
+import Profilna from '@/views/ProfilnaStranica.vue'
 import Materijali from '@/views/Materijali.vue'
 import Dugmici from '@/views/Dugmici.vue'
 import Namestaj from '@/views/MaterijaliNamestaj.vue'
@@ -17,6 +16,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/profil',
+    name: 'ProfilnaStranica',
+    component: Profilna
   },
   {
     path: '/materijali',

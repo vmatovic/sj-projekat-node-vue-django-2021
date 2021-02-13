@@ -4,6 +4,10 @@
         <input type="text" placeholder="Korisnicko ime" v-model="username" />
         <input type="password" placeholder="Sifra" v-model="password" />
         <input type="button" @click="login" value="Sign up" />
+        <br>
+        <br>
+        <a href="/sign-up">Ako niste registrovani do sada, kliknite ovde.</a>
+        <br>
         <p v-if="msg">{{ msg }}</p>
     </div>    
 </template>
