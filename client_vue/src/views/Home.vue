@@ -3,7 +3,6 @@
         <List />
         <h1>Cao {{ username }}</h1>
         <p>{{ secretMessage }}</p>
-        <input type="button" @click="logout" value="Log out" />
     </div>
 </template>
 
@@ -26,10 +25,6 @@ export default {
         this.secretMessage = await AuthService.getSecret();
     },
     methods: {
-        logout() {
-            this.$store.dispatch('logout');
-            this.$router.push('/login');
-        }
     },
     components: {
         List

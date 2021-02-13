@@ -8,6 +8,7 @@ import NewMessage from '@/views/NewMessage.vue'
 import Materijali from '@/views/Materijali.vue'
 import Dugmici from '@/views/Dugmici.vue'
 import Namestaj from '@/views/MaterijaliNamestaj.vue'
+import JedanMaterijal from '@/views/JedanMaterijal.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/materijali',
     name: 'Materijali',
     component: Materijali
+  },
+  {
+    path: '/materijal/:id',
+    name: 'JedanMaterijal',
+    component: JedanMaterijal
   },
   {
     path: '/dugmici',
@@ -41,16 +47,6 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LogIn
-  },
-  {
-    path: '/edit',
-    name: 'newMessage',
-    component: NewMessage
-  },
-  {
-    path: '/message/:id',
-    name: 'message',
-    component: Message
   }
 ]
 
