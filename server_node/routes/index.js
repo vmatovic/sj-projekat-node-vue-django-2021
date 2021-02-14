@@ -124,6 +124,33 @@ router.get('/materijal/:id', (req, res, next) => {
     });
 });
 
+router.post('/materijal/placanje/:id', userMiddleware.mozeMaterijal, (req, res, next) => {
+    db.query(`INSERT INTO narudzbina (narudzbinaID, korisnikID, materijaliID, datum_narucivanja) VALUES ('${uuid.v4()}', '${req.body.korID}', ${req.params.id}, now())`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        db.query(`UPDATE materijali SET preostala_duzina = preostala_duzina - ${req.body.amt} WHERE materijalID = ${req.params.id}`,
+        (err, result) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.status(200).send({
+                msg: 'Uspesno!'
+            });
+        });
+
+        /*
+        return res.status(200).send({
+            res: result[0]
+        });
+        */
+    });
+});
+
 router.post('/komentar', (req, res, next) => {
     db.query(`INSERT INTO komentari (komentarID, tekst, korisnikID, materijalID, postavljeno_datuma) VALUES ('${uuid.v4()}', '${req.body.tekst}', '${req.body.korID}', ${req.body.matID}, now());`,
     (err, result) => {

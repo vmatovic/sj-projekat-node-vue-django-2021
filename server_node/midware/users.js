@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const db = require('../db');
 
 module.exports = {
     validateRegister: (req, res, next) => {
@@ -41,5 +42,30 @@ module.exports = {
                 msg: 'Sesija nije validna'
             });
         }
+    },
+
+    mozeMaterijal: (req, res, next) => {
+        db.query(`SELECT preostala_duzina FROM materijali WHERE materijalID = ${req.params.id}`,
+        (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (!result) {
+                return res.status(401).send({
+                    msg: 'Nepostojeci materijal.'
+                });
+            }
+            var { preostala_duzina } = result[0];
+            const num = parseInt(preostala_duzina);
+            const order = parseInt(req.body.amt);
+            console.log(num);
+            console.log(order);
+            if (order > num) {
+                return res.status(401).send({
+                    msg: 'Prekoracili ste granicu.'
+                });
+            }
+            next();
+        });
     }
 };

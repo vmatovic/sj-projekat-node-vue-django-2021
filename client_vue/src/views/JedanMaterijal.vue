@@ -6,7 +6,7 @@
             <h5>Boja: {{matstat.boja}}</h5>
             <h5>Preostala duzina: {{matstat.preostala_duzina}}m</h5>
             <h5>Cena po metru: {{matstat.cena_po_metru}} din</h5>
-            <b-button variant="outline-primary" v-if="this.$store.getters.isLoggedIn">🛒</b-button>
+            <b-button variant="outline-primary" @click="gotoKupovina" v-if="this.$store.getters.isLoggedIn">🛒</b-button>
             <b-button variant="outline-primary" v-else disabled>🛒</b-button>
         </div>
         <br>
@@ -82,6 +82,9 @@ export default {
                     this.$router.push(`/materijal/${this.$route.params.id}`);
 
                 }).catch((err) => console.log(err));
+        },
+        gotoKupovina() {
+            this.$router.push(`/materijal/kupovina/${this.$route.params.id}`);
         }
     }
 }

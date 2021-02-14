@@ -30,7 +30,7 @@
                     <b-dropdown-item-button @click="gotoProfilePage" aria-describedby="dropdown-header-label">
                     Profil
                     </b-dropdown-item-button>
-                    <b-dropdown-item-button @click="gotoProfilePage" aria-describedby="dropdown-header-label">
+                    <b-dropdown-item-button @click="gotoNarudzbinePage" aria-describedby="dropdown-header-label">
                     Narudzbine
                     </b-dropdown-item-button>
                     <b-dropdown-item-button @click="logout" aria-describedby="dropdown-header-label">
@@ -57,6 +57,9 @@ export default {
         },
         gotoProfilePage() {
             this.$router.push('/profil');
+        },
+        gotoNarudzbinePage() {
+            this.$router.push('/narudzbine');
         }
     }
 }
