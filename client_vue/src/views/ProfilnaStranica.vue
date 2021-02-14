@@ -11,7 +11,7 @@
             <p> {{ kom.naziv }} {{ kom.boja }} </p>
             <p> {{ kom.tekst }} </p>
             <small> {{ kom.postavljeno_datuma }} </small>
-            <b-button variant="danger">Obrisi</b-button>
+            <b-button @click="brisiKomentar(kom.komentarID)" variant="danger">Obrisi</b-button>
             <br>
             <hr>
             <br>
@@ -37,6 +37,19 @@ export default {
         async comData() {
             const { data } = await axios.get(`http://localhost:2999/api/profil/komentari/${this.korisnik.id}`);
             this.licni_komentari = data.res;
+        },
+
+        brisiKomentar(_id) {
+            console.log(_id);
+            axios.delete(`http://localhost:2999/api/komentar/`,
+            {
+                data: {
+                    id: _id,
+                },
+                    headers: {
+
+                }
+            });
         }
     }
 }

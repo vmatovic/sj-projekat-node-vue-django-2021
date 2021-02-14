@@ -138,6 +138,20 @@ router.get('/dugme/:id', (req, res, next) => {
     });
 });
 
+router.get('/namestaj/:id', (req, res, next) => {
+    db.query(`SELECT * FROM materijali_namestaj WHERE m_namestajID = ${req.params.id};`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return res.status(200).send({
+            res: result[0]
+        });
+    });
+});
+
 router.post('/materijal/placanje/:id', userMiddleware.mozeMaterijal, (req, res, next) => {
     db.query(`INSERT INTO narudzbina (narudzbinaID, korisnikID, materijaliID, kolicina, datum_narucivanja) VALUES ('${uuid.v4()}', '${req.body.korID}', ${req.params.id}, ${req.body.amt} ,now())`,
     (err, result) => {
@@ -180,6 +194,27 @@ router.post('/dugme/placanje/:id', userMiddleware.mozeDugme, (req, res, next) =>
     });
 });
 
+router.post('/namestaj/placanje/:id', userMiddleware.mozeNamestaj, (req, res, next) => {
+    db.query(`INSERT INTO narudzbina (narudzbinaID, korisnikID, m_namestajID, kolicina, datum_narucivanja) VALUES ('${uuid.v4()}', '${req.body.korID}', ${req.params.id}, ${req.body.amt} ,now())`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        db.query(`UPDATE materijali_namestaj SET preostala_duzina = preostala_duzina - ${req.body.amt} WHERE m_namestajID = ${req.params.id}`,
+        (err, result) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.status(200).send({
+                msg: 'Uspesno!'
+            });
+        });
+    });
+});
+
 router.post('/komentar', (req, res, next) => {
     db.query(`INSERT INTO komentari (komentarID, tekst, korisnikID, materijalID, postavljeno_datuma) VALUES ('${uuid.v4()}', '${req.body.tekst}', '${req.body.korID}', ${req.body.matID}, now());`,
     (err, result) => {
@@ -190,6 +225,20 @@ router.post('/komentar', (req, res, next) => {
 
         return res.status(200).send({
             res: result[0]
+        });
+    });
+});
+
+router.delete('/komentar', (req, res, next) => {
+    db.query(`DELETE FROM komentari WHERE komentarID LIKE '${req.body.id}'`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return res.status(200).send({
+            res: 'Obrisano'
         });
     });
 });
@@ -209,7 +258,7 @@ router.get('/materijal/komentari/:id', (req, res, next) => {
 });
 
 router.get('/profil/komentari/:id', (req, res, next) => {
-    db.query(`SELECT materijali.naziv, materijali.boja, komentari.tekst, komentari.postavljeno_datuma FROM komentari INNER JOIN materijali ON komentari.materijalID = materijali.materijalID WHERE komentari.korisnikID LIKE '${req.params.id}' ORDER BY komentari.postavljeno_datuma DESC;`,
+    db.query(`SELECT * FROM komentari INNER JOIN materijali ON komentari.materijalID = materijali.materijalID WHERE komentari.korisnikID LIKE '${req.params.id}' ORDER BY komentari.postavljeno_datuma DESC;`,
     (err, result) => {
         if (err) {
             console.log(err);
@@ -238,6 +287,20 @@ router.get('/narudzbine/materijali/:id', (req, res, next) => {
 
 router.get('/narudzbine/dugmici/:id', (req, res, next) => {
     db.query(`SELECT dugmici.boja, narudzbina.kolicina, narudzbina.datum_narucivanja FROM narudzbina INNER JOIN dugmici ON narudzbina.dugmiciID = dugmici.dugmiciID WHERE narudzbina.korisnikID LIKE '${req.params.id}' ORDER BY narudzbina.datum_narucivanja DESC;`,
+    (err, result) => {
+        console.log('ok');
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        return res.status(200).send({
+            res: result
+        });
+    });
+});
+
+router.get('/narudzbine/namestaji/:id', (req, res, next) => {
+    db.query(`SELECT * FROM narudzbina INNER JOIN materijali_namestaj ON narudzbina.m_namestajID = materijali_namestaj.m_namestajID WHERE narudzbina.korisnikID LIKE '${req.params.id}' ORDER BY narudzbina.datum_narucivanja DESC;`,
     (err, result) => {
         console.log('ok');
         if (err) {

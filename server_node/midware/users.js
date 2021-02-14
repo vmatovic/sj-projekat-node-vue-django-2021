@@ -90,5 +90,28 @@ module.exports = {
             }
             next();
         });
+    },
+
+    mozeNamestaj: (req, res, next) => {
+        db.query(`SELECT preostala_duzina FROM materijali_namestaj WHERE m_namestajID = ${req.params.id}`,
+        (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (!result) {
+                return res.status(401).send({
+                    msg: 'Nepostojeci mebl.'
+                });
+            }
+            var { preostala_duzina } = result[0];
+            const num = parseInt(preostala_duzina);
+            const order = parseInt(req.body.amt);
+            if (order > num) {
+                return res.status(200).send({
+                    msg: 'Prekoracili ste granicu.'
+                });
+            }
+            next();
+        });
     }
 };

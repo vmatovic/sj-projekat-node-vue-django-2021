@@ -10,8 +10,10 @@ import Dugmici from '@/views/Dugmici.vue'
 import Namestaj from '@/views/MaterijaliNamestaj.vue'
 import JedanMaterijal from '@/views/JedanMaterijal.vue'
 import JednoDugme from '@/views/JednoDugme.vue'
+import JedanMebl from '@/views/JedanMebl.vue'
 import KupovinaMaterijala from '@/views/KupovinaMaterijala.vue'
 import KupovinaDugmeta from '@/views/KupovinaDugmeta.vue'
+import KupovinaMebla from '@/views/KupovinaMebla.vue'
 
 Vue.use(VueRouter)
 
@@ -47,6 +49,11 @@ const routes = [
     component: JednoDugme
   },
   {
+    path: '/namestaj/:id',
+    name: 'JedanMebl',
+    component: JedanMebl
+  },
+  {
     path: '/materijal/kupovina/:id',
     name: 'KupovinaMaterijala',
     component: KupovinaMaterijala
@@ -55,6 +62,11 @@ const routes = [
     path: '/dugme/kupovina/:id',
     name: 'KupovinaDugmeta',
     component: KupovinaDugmeta
+  },
+  {
+    path: '/namestaj/kupovina/:id',
+    name: 'KupovinaMebla',
+    component: KupovinaMebla
   },
   {
     path: '/dugmici',

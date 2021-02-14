@@ -1,6 +1,8 @@
 <template>
     <div class="text-left">
-        <h5> <strong>{{ namestaj.boja }}</strong> {{namestaj.cena_deset_metara}}</h5>
+        <router-link :to="{name: 'JedanMebl', params: {id: namestaj.m_namestajID}}">
+            <h5> <strong>{{ namestaj.boja }}</strong> Cena 10 metara: {{namestaj.cena_deset_metara}}</h5>
+        </router-link>
     </div>
 </template>
 
