@@ -1,8 +1,24 @@
 const jwt = require('jsonwebtoken');
 const db = require('../db');
+const Joi = require('joi');
+
+const schema = Joi.object().keys({
+    username: Joi.string().alphanum().min(2).max(50).required(),
+    email: Joi.string().required().min(4).max(50),
+    password: Joi.string().required().min(5).max(100),
+    password_confirmation: Joi.string().required().min(5).max(100)
+});
 
 module.exports = {
     validateRegister: (req, res, next) => {
+        console.log(req.body);
+        const result = schema.validate(req.body);
+        if (result.error != null) {
+            return res.status(400).send({
+                msg: 'Neispravan sign-up'
+            });
+        }
+
         if (!req.body.username && req.body.username < 2) {
             return res.status(400).send({
                 msg: 'Molimo unesite Vas korisnicki naziv sa vise od 2 karaktera.'
