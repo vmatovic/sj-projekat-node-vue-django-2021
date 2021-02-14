@@ -1,0 +1,43 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<p class="h2 text-center">Komentari korisnika</p>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <ul class="list-group">
+		  <li class="list-group-item disabled" aria-disabled="true">Komentari danas</li>
+		  {% if not komentari_danas %}
+			<li class="list-group-item disabled" aria-disabled="true">Nista danas!</li>
+		  {% else %}
+			  {% for kom1 in komentari_danas %}
+				<li class="list-group-item"> {{ kom1.korisnik.username }}, "{{ kom1.tekst }}" za materijal <strong>{{ kom1.materijal.naziv }} {{ kom1.materijal.boja }} </strong> postavljeno {{ kom1.postavljeno_datuma }}</li>
+			  {% endfor %}
+		  {% endif %}
+		</ul>
+    </div>
+    <div class="col">
+      <ul class="list-group">
+		  <li class="list-group-item disabled" aria-disabled="true">Svi komentari</li>
+		  {% if not komentari %}
+			<li class="list-group-item disabled" aria-disabled="true">Nema komentara!</li>
+		  {% else %}
+			  {% for kom in komentari %}
+				<li class="list-group-item"> {{ kom.korisnik.username }}, "{{ kom.tekst }}" za materijal <strong>{{ kom.materijal.naziv }} {{ kom.materijal.boja }} </strong> postavljeno {{ kom.postavljeno_datuma }}</li>
+			  {% endfor %}
+		  {% endif %}
+		</ul>
+    </div>
+  </div>
+    <br>
+	<br>
+	<br>
+	<form action="{% url 'korisnici' %}" method="get">
+		{% csrf_token %}
+		<button type="submit" class="btn btn-warning">Nazad</button>
+	</form>
+</div>
+
+{% endblock %}

@@ -73,8 +73,8 @@ class Narudzbina(models.Model):
 class Komentari(models.Model):
     komentarid = models.CharField(db_column='komentarID', primary_key=True, max_length=255)  # Field name made lowercase.
     tekst = models.TextField()
-    korisnikID = models.ForeignKey(Korisnici, db_column='korisnikID', on_delete=models.CASCADE)  # Field name made lowercase.
-    materijal = models.ForeignKey(Materijali, on_delete=models.CASCADE)  # Field name made lowercase.
+    korisnik = models.ForeignKey(Korisnici, db_column='korisnikID', on_delete=models.CASCADE)  # Field name made lowercase.
+    materijal = models.ForeignKey(Materijali, db_column='materijalID', on_delete=models.CASCADE)  # Field name made lowercase.
     postavljeno_datuma = models.DateTimeField()
 
     class Meta:

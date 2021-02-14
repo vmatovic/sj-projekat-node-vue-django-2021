@@ -16,6 +16,11 @@ def korisnici(request):
 	prij_danas = Korisnici.objects.filter(last_login=timezone.now().date()).count()
 	return render(request, 'korisnici.html', {'kor_total': kor_total, 'prij_danas': prij_danas, 'svi_korisnici': svi_korisnici})
 
+def korisnici_komentari(request):
+	komentari = Komentari.objects.all()
+	komentari_danas = Komentari.objects.filter(postavljeno_datuma=timezone.now().date())
+	return render(request, 'komentari.html', {'komentari': komentari, 'komentari_danas': komentari_danas})
+	
 def izbrisi_korisnika(request, id):
 	print(id)
 	korisnik = Korisnici.objects.get(id=id)
