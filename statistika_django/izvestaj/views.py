@@ -16,6 +16,18 @@ def korisnici(request):
 	prij_danas = Korisnici.objects.filter(last_login=timezone.now().date()).count()
 	return render(request, 'korisnici.html', {'kor_total': kor_total, 'prij_danas': prij_danas, 'svi_korisnici': svi_korisnici})
 
+def materijali(request):
+	mat = Materijali.objects.all()
+	return render(request, 'materijali.html', {'materijali': mat})
+
+def dugmici(request):
+	dug = Dugmici.objects.all()
+	return render(request, 'dugmici.html', {'dugmici': dug})
+
+def meblovi(request):
+	mebl = MaterijaliNamestaj.objects.all()
+	return render(request, 'meblovi.html', {'meblovi': mebl})
+	
 def korisnici_komentari(request):
 	komentari = Komentari.objects.all()
 	komentari_danas = Komentari.objects.filter(postavljeno_datuma=timezone.now().date())

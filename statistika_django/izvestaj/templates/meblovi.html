@@ -1,0 +1,34 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+<p class="h2 text-center">Meblovi</p>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <ul class="list-group">
+		{% for mebl in meblovi %}
+			<li class="list-group-item">Boja: {{ mebl.boja }} | Preostala duzina: {{ mebl.preostala_duzina }} | Cena 10 metara: {{ mebl.cena_deset_metara }} din </li>
+			<div class="row">
+				<div class="col">
+					<button type="button" class="btn btn-warning">Izmeni</button>
+					<button type="button" class="btn btn-danger">Obrisi</button>
+				</div>
+			</div>
+			<br>
+		{% endfor %}
+	  </ul>
+    </div>
+  </div>
+	<br>
+	<button type="button" class="btn btn-success">Dodaj</button>
+	<form action="{% url 'home' %}" method="get">
+		{% csrf_token %}
+		<br>
+		<button type="submit" class="btn btn-warning">Nazad</button>
+	</form>
+</div>
+
+{% endblock %}

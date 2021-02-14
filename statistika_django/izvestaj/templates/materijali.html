@@ -1,0 +1,34 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+<p class="h2 text-center">Materijali</p>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <ul class="list-group">
+		{% for mat in materijali %}
+			<li class="list-group-item">Naziv: {{ mat.naziv }} | Boja: {{ mat.boja }} | Preostala duzina: {{ mat.preostala_duzina }} | Cena po metru: {{ mat.cena_po_metru }} din </li>
+			<div class="row">
+				<div class="col">
+					<button type="button" class="btn btn-warning">Izmeni</button>
+					<button type="button" class="btn btn-danger">Obrisi</button>
+				</div>
+			</div>
+			<br>
+		{% endfor %}
+	  </ul>
+    </div>
+  </div>
+	<br>
+	<button type="button" class="btn btn-success">Dodaj</button>
+	<form action="{% url 'home' %}" method="get">
+		{% csrf_token %}
+		<br>
+		<button type="submit" class="btn btn-warning">Nazad</button>
+	</form>
+</div>
+
+{% endblock %}

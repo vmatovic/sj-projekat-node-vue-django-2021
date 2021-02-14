@@ -1,0 +1,34 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+<p class="h2 text-center">Dugmici</p>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <ul class="list-group">
+		{% for dug in dugmici %}
+			<li class="list-group-item">Boja: {{ dug.boja }} | Preostala kolicina: {{ dug.kolicina }} | Cena 10 dugmica: {{ dug.cena_deset_dugmica }} din </li>
+			<div class="row">
+				<div class="col">
+					<button type="button" class="btn btn-warning">Izmeni</button>
+					<button type="button" class="btn btn-danger">Obrisi</button>
+				</div>
+			</div>
+			<br>
+		{% endfor %}
+	  </ul>
+    </div>
+  </div>
+	<br>
+	<button type="button" class="btn btn-success">Dodaj</button>
+	<form action="{% url 'home' %}" method="get">
+		{% csrf_token %}
+		<br>
+		<button type="submit" class="btn btn-warning">Nazad</button>
+	</form>
+</div>
+
+{% endblock %}
