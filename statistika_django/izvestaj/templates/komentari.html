@@ -7,6 +7,16 @@
 <div class="container">
   <div class="row">
     <div class="col">
+	  <div class="dropdown">
+		  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Rejting
+		  </button>
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<a class="dropdown-item" href="#">Pozitivni</a>
+			<a class="dropdown-item" href="#">Negativni</a>
+		  </div>
+	  </div>
+	  <br>
       <ul class="list-group">
 		  <li class="list-group-item disabled" aria-disabled="true">Komentari danas</li>
 		  {% if not komentari_danas %}
@@ -19,6 +29,16 @@
 		</ul>
     </div>
     <div class="col">
+	<div class="dropdown">
+		  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Rejting
+		  </button>
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<a class="dropdown-item" href="#">Pozitivni</a>
+			<a class="dropdown-item" href="#">Negativni</a>
+		  </div>
+	  </div>
+	  <br>
       <ul class="list-group">
 		  <li class="list-group-item disabled" aria-disabled="true">Svi komentari</li>
 		  {% if not komentari %}
@@ -32,7 +52,6 @@
     </div>
   </div>
     <br>
-	<br>
 	<br>
 	<form action="{% url 'korisnici' %}" method="get">
 		{% csrf_token %}

@@ -58,10 +58,10 @@ class MaterijaliNamestaj(models.Model):
 
 class Narudzbina(models.Model):
     narudzbinaid = models.CharField(db_column='narudzbinaID', primary_key=True, max_length=255)  # Field name made lowercase.
-    korisnikid = models.CharField(db_column='korisnikID', max_length=255)  # Field name made lowercase.
-    materijaliid = models.IntegerField(db_column='materijaliID', blank=True, null=True)  # Field name made lowercase.
-    dugmiciid = models.IntegerField(db_column='dugmiciID', blank=True, null=True)  # Field name made lowercase.
-    m_namestajid = models.IntegerField(db_column='m_namestajID', blank=True, null=True)  # Field name made lowercase.
+    korisnik = models.ForeignKey(Korisnici, db_column='korisnikID', max_length=255, on_delete=models.DO_NOTHING)  # Field name made lowercase.
+    materijal = models.ForeignKey(Materijali, db_column='materijaliID', blank=True, null=True, on_delete=models.DO_NOTHING)  # Field name made lowercase.
+    dugmici = models.ForeignKey(Dugmici, db_column='dugmiciID', blank=True, null=True, on_delete=models.DO_NOTHING)  # Field name made lowercase.
+    m_namestaj = models.ForeignKey(MaterijaliNamestaj, db_column='m_namestajID', blank=True, null=True, on_delete=models.DO_NOTHING)  # Field name made lowercase.
     kolicina = models.IntegerField()
     datum_narucivanja = models.DateField()
 

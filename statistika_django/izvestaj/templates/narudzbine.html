@@ -1,0 +1,32 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<p class="h2 text-center">Sve narudzbine</p>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <ul class="list-group">
+		{% for nar in narudzbine %}
+			{% if nar.materijal is not null %}
+				<li class="list-group-item">Korisnik {{ nar.korisnik.username }} je narucio materijal {{ nar.materijal.naziv }} {{ nar.materijal.boja }} {{ nar.kolicina }} m. </li>
+			{% elif nar.dugmici is not null %}
+				<li class="list-group-item">Korisnik {{ nar.korisnik.username }} je narucio {{ nar.kolicina }} dugmica boje {{ nar.dugmici.boja }}. </li>
+			{% elif nar.m_namestaj is not null %}
+				<li class="list-group-item">Korisnik {{ nar.korisnik.username }} je narucio {{ nar.m_namestaj.boja }} mebl {{ nar.kolicina }} m. </li>
+			
+			{% endif %}
+		{% endfor %}
+	  </ul>
+    </div>
+  </div>
+	<br>
+	<br>
+	<form action="{% url 'korisnici' %}" method="get">
+		{% csrf_token %}
+		<button type="submit" class="btn btn-warning">Nazad</button>
+	</form>
+</div>
+
+{% endblock %}

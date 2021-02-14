@@ -20,6 +20,10 @@ def korisnici_komentari(request):
 	komentari = Komentari.objects.all()
 	komentari_danas = Komentari.objects.filter(postavljeno_datuma=timezone.now().date())
 	return render(request, 'komentari.html', {'komentari': komentari, 'komentari_danas': komentari_danas})
+
+def korisnici_narudzbine(request):
+	narudzbine = Narudzbina.objects.all()
+	return render(request, 'narudzbine.html', {'narudzbine': narudzbine})
 	
 def izbrisi_korisnika(request, id):
 	print(id)
