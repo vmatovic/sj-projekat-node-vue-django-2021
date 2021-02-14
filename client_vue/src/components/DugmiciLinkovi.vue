@@ -1,6 +1,8 @@
 <template>
     <div class="text-left">
-        <h5> <strong>{{ dugme.boja }}</strong> Cena 10 dugmica: {{dugme.cena_deset_dugmica}} din</h5>
+        <router-link :to="{name: 'JednoDugme', params: {id: dugme.dugmiciID}}">
+            <h5> <strong>{{ dugme.boja }}</strong> Cena 10 dugmica: {{dugme.cena_deset_dugmica}} din</h5>
+        </router-link>
     </div>
 </template>
 

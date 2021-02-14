@@ -124,8 +124,22 @@ router.get('/materijal/:id', (req, res, next) => {
     });
 });
 
+router.get('/dugme/:id', (req, res, next) => {
+    db.query(`SELECT * FROM dugmici WHERE dugmiciID = ${req.params.id};`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return res.status(200).send({
+            res: result[0]
+        });
+    });
+});
+
 router.post('/materijal/placanje/:id', userMiddleware.mozeMaterijal, (req, res, next) => {
-    db.query(`INSERT INTO narudzbina (narudzbinaID, korisnikID, materijaliID, datum_narucivanja) VALUES ('${uuid.v4()}', '${req.body.korID}', ${req.params.id}, now())`,
+    db.query(`INSERT INTO narudzbina (narudzbinaID, korisnikID, materijaliID, kolicina, datum_narucivanja) VALUES ('${uuid.v4()}', '${req.body.korID}', ${req.params.id}, ${req.body.amt} ,now())`,
     (err, result) => {
         if (err) {
             console.log(err);
@@ -142,12 +156,27 @@ router.post('/materijal/placanje/:id', userMiddleware.mozeMaterijal, (req, res, 
                 msg: 'Uspesno!'
             });
         });
+    });
+});
 
-        /*
-        return res.status(200).send({
-            res: result[0]
+router.post('/dugme/placanje/:id', userMiddleware.mozeDugme, (req, res, next) => {
+    db.query(`INSERT INTO narudzbina (narudzbinaID, korisnikID, dugmiciID, kolicina, datum_narucivanja) VALUES ('${uuid.v4()}', '${req.body.korID}', ${req.params.id}, ${req.body.amt} ,now())`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        db.query(`UPDATE dugmici SET kolicina = kolicina - ${req.body.amt} WHERE dugmiciID = ${req.params.id}`,
+        (err, result) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.status(200).send({
+                msg: 'Uspesno!'
+            });
         });
-        */
     });
 });
 
@@ -187,6 +216,34 @@ router.get('/profil/komentari/:id', (req, res, next) => {
             throw err;
         }
 
+        return res.status(200).send({
+            res: result
+        });
+    });
+});
+
+router.get('/narudzbine/materijali/:id', (req, res, next) => {
+    db.query(`SELECT * FROM narudzbina INNER JOIN materijali ON narudzbina.materijaliID = materijali.materijalID WHERE narudzbina.korisnikID LIKE '${req.params.id}' ORDER BY narudzbina.datum_narucivanja DESC;`,
+    (err, result) => {
+        console.log('ok');
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        return res.status(200).send({
+            res: result
+        });
+    });
+});
+
+router.get('/narudzbine/dugmici/:id', (req, res, next) => {
+    db.query(`SELECT dugmici.boja, narudzbina.kolicina, narudzbina.datum_narucivanja FROM narudzbina INNER JOIN dugmici ON narudzbina.dugmiciID = dugmici.dugmiciID WHERE narudzbina.korisnikID LIKE '${req.params.id}' ORDER BY narudzbina.datum_narucivanja DESC;`,
+    (err, result) => {
+        console.log('ok');
+        if (err) {
+            console.log(err);
+            throw err;
+        }
         return res.status(200).send({
             res: result
         });

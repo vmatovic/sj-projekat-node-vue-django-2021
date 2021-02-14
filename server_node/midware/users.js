@@ -61,7 +61,30 @@ module.exports = {
             console.log(num);
             console.log(order);
             if (order > num) {
+                return res.status(200).send({
+                    msg: 'Prekoracili ste granicu.'
+                });
+            }
+            next();
+        });
+    },
+
+    mozeDugme: (req, res, next) => {
+        db.query(`SELECT kolicina FROM dugmici WHERE dugmiciID = ${req.params.id}`,
+        (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (!result) {
                 return res.status(401).send({
+                    msg: 'Nepostojece dugme.'
+                });
+            }
+            var { kolicina } = result[0];
+            const num = parseInt(kolicina);
+            const order = parseInt(req.body.amt);
+            if (order > num) {
+                return res.status(200).send({
                     msg: 'Prekoracili ste granicu.'
                 });
             }
