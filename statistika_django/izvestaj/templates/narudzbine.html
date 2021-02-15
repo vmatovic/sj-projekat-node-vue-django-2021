@@ -6,7 +6,48 @@
 <br>
 <div class="container">
   <div class="row">
-    <div class="col-sm">
+	<div class="col">
+      <h6>Isporuceno danas: {{ isporuceno_danas }}</h6>
+	  <h6>Isporuceno ukupno: {{ isporuceno_ukupno }}</h6>
+    </div>
+    <div class="col-sm-5">
+	<p class="h4 text-center">Narudzbine danas</p>
+	{% if narudzbine_danas %}
+      <ul class="list-group">
+		{% for nar in narudzbine_danas %}
+			{% if nar.materijal is not null %}
+				<li class="list-group-item">Korisnik {{ nar.korisnik.username }} je narucio materijal {{ nar.materijal.naziv }} {{ nar.materijal.boja }} {{ nar.kolicina }} m. </li>
+			{% elif nar.dugmici is not null %}
+				<li class="list-group-item">Korisnik {{ nar.korisnik.username }} je narucio {{ nar.kolicina }} dugmica boje {{ nar.dugmici.boja }}. </li>
+			{% elif nar.m_namestaj is not null %}
+				<li class="list-group-item">Korisnik {{ nar.korisnik.username }} je narucio {{ nar.m_namestaj.boja }} mebl {{ nar.kolicina }} m. </li>
+			{% endif %}
+			{% if nar.isporuceno %}
+				<p class="text-success">Isporuceno!</p>
+			{% endif %}
+			<div class="row">
+				<div class="col-sm">
+					<form action="{% url 'izbrisi_narudzbinu' nar.narudzbinaid %}" method="get">
+						{% csrf_token %}
+						<button type="submit" class="btn btn-danger">Izbrisi narudzbinu</button>
+					</form>
+				</div>
+				<div class="col-sm">
+					<form action="{% url 'potvrdi_narudzbinu' nar.narudzbinaid %}" method="get">
+						{% csrf_token %}
+						<button type="submit" class="btn btn-success">Potvrdi da je isporuceno</button>
+					</form>
+				</div>
+			</div>
+			<br>
+		{% endfor %}
+	  </ul>
+	{% else %}
+		<p class="h5 text-center text-danger">Nista nije naruceno danas!</p>
+	{% endif %}
+    </div>
+	<div class="col-sm-5">
+	<p class="h4 text-center">Sve narudzbine</p>
       <ul class="list-group">
 		{% for nar in narudzbine %}
 			{% if nar.materijal is not null %}
@@ -15,8 +56,25 @@
 				<li class="list-group-item">Korisnik {{ nar.korisnik.username }} je narucio {{ nar.kolicina }} dugmica boje {{ nar.dugmici.boja }}. </li>
 			{% elif nar.m_namestaj is not null %}
 				<li class="list-group-item">Korisnik {{ nar.korisnik.username }} je narucio {{ nar.m_namestaj.boja }} mebl {{ nar.kolicina }} m. </li>
-			
 			{% endif %}
+			{% if nar.isporuceno %}
+				<p class="text-success">Isporuceno!</p>
+			{% endif %}
+			<div class="row">
+				<div class="col-sm">
+					<form action="{% url 'izbrisi_narudzbinu' nar.narudzbinaid %}" method="get">
+						{% csrf_token %}
+						<button type="submit" class="btn btn-danger">Izbrisi narudzbinu</button>
+					</form>
+				</div>
+				<div class="col-sm">
+					<form action="{% url 'potvrdi_narudzbinu' nar.narudzbinaid %}" method="get">
+						{% csrf_token %}
+						<button type="submit" class="btn btn-success">Potvrdi da je isporuceno</button>
+					</form>
+				</div>
+			</div>
+			<br>
 		{% endfor %}
 	  </ul>
     </div>

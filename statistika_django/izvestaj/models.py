@@ -24,7 +24,7 @@ class Korisnici(models.Model):
     username = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
-    is_admin = models.IntegerField()
+    is_admin = models.BooleanField()
     registered = models.DateTimeField()
     last_login = models.DateTimeField()
 
@@ -64,6 +64,7 @@ class Narudzbina(models.Model):
     m_namestaj = models.ForeignKey(MaterijaliNamestaj, db_column='m_namestajID', blank=True, null=True, on_delete=models.DO_NOTHING)  # Field name made lowercase.
     kolicina = models.IntegerField()
     datum_narucivanja = models.DateField()
+    isporuceno = models.BooleanField(default=False)
 
     class Meta:
         managed = False

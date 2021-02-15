@@ -4,8 +4,9 @@
 
 <p class="h2 text-center">Meblovi</p>
 <br>
-<br>
 <div class="container">
+  <br>
+  <button type="button" class="btn btn-success">Dodaj</button>
   <div class="row">
     <div class="col-sm">
       <ul class="list-group">
@@ -23,7 +24,6 @@
     </div>
   </div>
 	<br>
-	<button type="button" class="btn btn-success">Dodaj</button>
 	<form action="{% url 'home' %}" method="get">
 		{% csrf_token %}
 		<br>
