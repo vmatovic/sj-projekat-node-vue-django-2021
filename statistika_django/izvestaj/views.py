@@ -34,11 +34,27 @@ def materijali(request):
 
 def dugmici(request):
 	dug = Dugmici.objects.all()
-	return render(request, 'dugmici.html', {'dugmici': dug})
+	dug_prosecna_cena = Dugmici.objects.all().aggregate(Avg('cena_deset_dugmica'))
+	najjeftin = Dugmici.objects.all().aggregate(Min('cena_deset_dugmica'))['cena_deset_dugmica__min']
+	najskup = Dugmici.objects.all().aggregate(Max('cena_deset_dugmica'))['cena_deset_dugmica__max']
+	najjeftinije_dug = Dugmici.objects.filter(cena_deset_dugmica=najjeftin).first()
+	najskuplje_dug = Dugmici.objects.filter(cena_deset_dugmica=najskup).first()
+	return render(request, 'dugmici.html', {'dugmici': dug,
+				'dug_prosecna_cena': dug_prosecna_cena,
+				'najjeftinije_dug': najjeftinije_dug,
+				'najskuplje_dug': najskuplje_dug})
 
 def meblovi(request):
 	mebl = MaterijaliNamestaj.objects.all()
-	return render(request, 'meblovi.html', {'meblovi': mebl})
+	mebl_prosecna_cena = MaterijaliNamestaj.objects.all().aggregate(Avg('cena_deset_metara'))
+	najjeftin = MaterijaliNamestaj.objects.all().aggregate(Min('cena_deset_metara'))['cena_deset_metara__min']
+	najskup = MaterijaliNamestaj.objects.all().aggregate(Max('cena_deset_metara'))['cena_deset_metara__max']
+	najjeftiniji_mebl = MaterijaliNamestaj.objects.filter(cena_deset_metara=najjeftin).first()
+	najskuplji_mebl = MaterijaliNamestaj.objects.filter(cena_deset_metara=najskup).first()
+	return render(request, 'meblovi.html', {'meblovi': mebl,
+				'mebl_prosecna_cena': mebl_prosecna_cena,
+				'najjeftiniji_mebl': najjeftiniji_mebl,
+				'najskuplji_mebl': najskuplji_mebl})
 	
 def korisnici_komentari(request):
 	komentari = Komentari.objects.all()
@@ -105,3 +121,77 @@ def izbrisi_materijal(request, id):
 	mat = Materijali.objects.get(materijalid=id)
 	mat.delete()
 	return redirect('materijali')
+
+def novo_dugme(request):
+	if request.method == 'POST':
+		form = DugmiciForm(request.POST)
+		if form.is_valid():
+			last_obj = Dugmici.objects.last()
+			dug = Dugmici(dugmiciid=last_obj.dugmiciid+1, boja=form.cleaned_data['boja'], kolicina=form.cleaned_data['kolicina'], cena_deset_dugmica=form.cleaned_data['cena_deset_dugmica'])
+			dug.save()
+			return redirect('dugmici')
+		else:
+			form = DugmiciForm()
+			return render(request, 'dugme_forma.html', {'form': form})
+	else:
+		form = DugmiciForm()
+		return render(request, 'dugme_forma.html', {'form': form})
+
+def izmeni_dugme(request, id):
+	dug = Dugmici.objects.get(dugmiciid=id)
+	if request.method == 'POST':
+		form = DugmiciForm(request.POST)
+		if form.is_valid():
+			dug.boja = form.cleaned_data['boja']
+			dug.kolicina = form.cleaned_data['kolicina']
+			dug.cena_deset_dugmica = form.cleaned_data['cena_deset_dugmica']
+			dug.save()
+			return redirect('dugmici')
+		else:
+			form = DugmiciForm(instance=dug)
+			return render(request, 'dugme_forma_izmeni.html', {'form': form, 'id': id})
+	else:
+		form = DugmiciForm(instance=dug)
+		return render(request, 'dugme_forma_izmeni.html', {'form': form, 'id': id})
+
+def izbrisi_dugme(request, id):
+	dug = Dugmici.objects.get(dugmiciid=id)
+	dug.delete()
+	return redirect('dugmici')
+
+def novi_mebl(request):
+	if request.method == 'POST':
+		form = MeblForm(request.POST)
+		if form.is_valid():
+			last_obj = MaterijaliNamestaj.objects.last()
+			mebl = MaterijaliNamestaj(m_namestajid=last_obj.m_namestajid+1, boja=form.cleaned_data['boja'], preostala_duzina=form.cleaned_data['preostala_duzina'], cena_deset_metara=form.cleaned_data['cena_deset_metara'])
+			mebl.save()
+			return redirect('meblovi')
+		else:
+			form = MeblForm()
+			return render(request, 'mebl_forma.html', {'form': form})
+	else:
+		form = MeblForm()
+		return render(request, 'mebl_forma.html', {'form': form})
+
+def izmeni_mebl(request, id):
+	mebl = MaterijaliNamestaj.objects.get(m_namestajid=id)
+	if request.method == 'POST':
+		form = MeblForm(request.POST)
+		if form.is_valid():
+			mebl.boja = form.cleaned_data['boja']
+			mebl.preostala_duzina = form.cleaned_data['preostala_duzina']
+			mebl.cena_deset_metara = form.cleaned_data['cena_deset_metara']
+			mebl.save()
+			return redirect('meblovi')
+		else:
+			form = MeblForm(instance=mebl)
+			return render(request, 'mebl_forma_izmeni.html', {'form': form, 'id': id})
+	else:
+		form = MeblForm(instance=mebl)
+		return render(request, 'mebl_forma_izmeni.html', {'form': form, 'id': id})
+
+def izbrisi_mebl(request, id):
+	mebl = MaterijaliNamestaj.objects.get(m_namestajid=id)
+	mebl.delete()
+	return redirect('meblovi')

@@ -5,8 +5,18 @@
 <p class="h2 text-center">Meblovi</p>
 <br>
 <div class="container">
-  <br>
-  <button type="button" class="btn btn-success">Dodaj</button>
+  <div class="row">
+	<div class="col-sm">
+		<p>Prosecna cena meblova: {{ mebl_prosecna_cena.cena_deset_metara__avg }} din</p>
+		<p>Najjeftiniji mebl: {{ najjeftiniji_mebl.boja }} gde je cena 10 metara {{ najjeftiniji_mebl.cena_deset_metara }} din. </p>
+		<p>Najskuplji mebl: {{ najskuplji_mebl.boja }} gde je cena 10 metara {{ najskuplji_mebl.cena_deset_metara }} din.</p>
+	</div>
+  </div>
+<form action="{% url 'novi_mebl' %}" method="get">
+	{% csrf_token %}
+	<br>
+	<button type="submit" class="btn btn-success">Dodaj</button>
+</form>
   <div class="row">
     <div class="col-sm">
       <ul class="list-group">
@@ -14,8 +24,18 @@
 			<li class="list-group-item">Boja: {{ mebl.boja }} | Preostala duzina: {{ mebl.preostala_duzina }} | Cena 10 metara: {{ mebl.cena_deset_metara }} din </li>
 			<div class="row">
 				<div class="col">
-					<button type="button" class="btn btn-warning">Izmeni</button>
-					<button type="button" class="btn btn-danger">Obrisi</button>
+					<div class="col-md-1">
+						<form action="{% url 'izmeni_mebl' mebl.m_namestajid %}" method="get">
+							{% csrf_token %}
+							<button type="submit" class="btn btn-warning">Izmeni</button>
+						</form>
+					</div>
+					<div class="col-md">
+						<form action="{% url 'izbrisi_mebl' mebl.m_namestajid %}" method="get">
+							{% csrf_token %}
+							<button type="submit" class="btn btn-danger">Obrisi</button>
+						</form>
+					</div>
 				</div>
 			</div>
 			<br>

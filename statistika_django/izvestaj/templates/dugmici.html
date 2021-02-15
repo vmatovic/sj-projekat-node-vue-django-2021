@@ -5,7 +5,18 @@
 <p class="h2 text-center">Dugmici</p>
 <br>
 <div class="container">
-<button type="button" class="btn btn-success">Dodaj</button>
+<div class="row">
+	<div class="col-sm">
+		<p>Prosecna cena dugmica: {{ dug_prosecna_cena.cena_deset_dugmica__avg }} din</p>
+		<p>Najjeftiniji dugmici: {{ najjeftinije_dug.boja }} gde je cena 10 dugmica {{ najjeftinije_dug.cena_deset_dugmica }} din. </p>
+		<p>Najskuplji dugmici: {{ najskuplje_dug.boja }} gde je cena 10 dugmica {{ najskuplje_dug.cena_deset_dugmica }} din.</p>
+	</div>
+</div>
+<form action="{% url 'novo_dugme' %}" method="get">
+	{% csrf_token %}
+	<br>
+	<button type="submit" class="btn btn-success">Dodaj</button>
+</form>
 <br>
   <div class="row">
     <div class="col-sm">
@@ -14,8 +25,18 @@
 			<li class="list-group-item">Boja: {{ dug.boja }} | Preostala kolicina: {{ dug.kolicina }} | Cena 10 dugmica: {{ dug.cena_deset_dugmica }} din </li>
 			<div class="row">
 				<div class="col">
-					<button type="button" class="btn btn-warning">Izmeni</button>
-					<button type="button" class="btn btn-danger">Obrisi</button>
+					<div class="col-md-1">
+						<form action="{% url 'izmeni_dugme' dug.dugmiciid %}" method="get">
+							{% csrf_token %}
+							<button type="submit" class="btn btn-warning">Izmeni</button>
+						</form>
+					</div>
+					<div class="col-md">
+						<form action="{% url 'izbrisi_dugme' dug.dugmiciid %}" method="get">
+							{% csrf_token %}
+							<button type="submit" class="btn btn-danger">Obrisi</button>
+						</form>
+					</div>
 				</div>
 			</div>
 			<br>

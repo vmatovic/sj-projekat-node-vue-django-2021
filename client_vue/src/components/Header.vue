@@ -15,10 +15,6 @@
                     </b-dropdown>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2 w-100" type="search" placeholder="Pretraga..." aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">🔍</button>
-            </form>
             <div v-if="!this.$store.getters.isLoggedIn">
                 <a class="nav-link active" aria-current="page" href="/login">Prijavljivanje</a>
             </div>
