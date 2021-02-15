@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import timezone
+from django.db.models import Avg, Min, Max, Sum
 import datetime
 from izvestaj.models import *
 from izvestaj.forms import *
@@ -19,7 +20,17 @@ def korisnici(request):
 
 def materijali(request):
 	mat = Materijali.objects.all()
-	return render(request, 'materijali.html', {'materijali': mat})
+	mat_ukupno_metara = Materijali.objects.all().aggregate(Sum('preostala_duzina'))
+	mat_prosecna_cena = Materijali.objects.all().aggregate(Avg('cena_po_metru'))
+	najjeftin = Materijali.objects.all().aggregate(Min('cena_po_metru'))['cena_po_metru__min']
+	najskup = Materijali.objects.all().aggregate(Max('cena_po_metru'))['cena_po_metru__max']
+	najjeftiniji_mat = Materijali.objects.filter(cena_po_metru=najjeftin).first()
+	najskuplji_mat = Materijali.objects.filter(cena_po_metru=najskup).first()
+	return render(request, 'materijali.html', {'materijali': mat,
+				'mat_ukupno_metara': mat_ukupno_metara,
+				'mat_prosecna_cena': mat_prosecna_cena,
+				'najjeftiniji_mat': najjeftiniji_mat,
+				'najskuplji_mat': najskuplji_mat})
 
 def dugmici(request):
 	dug = Dugmici.objects.all()

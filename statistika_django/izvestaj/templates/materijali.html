@@ -5,6 +5,14 @@
 <p class="h2 text-center">Materijali</p>
 <br>
 <div class="container">
+	<div class="row">
+		<div class="col-sm">
+			<p>Ukupna preostala duzina: {{ mat_ukupno_metara.preostala_duzina__sum }} m</p>
+			<p>Prosecna cena materijala: {{ mat_prosecna_cena.cena_po_metru__avg }} din po metru</p>
+			<p>Najjeftiniji materijal: {{ najjeftiniji_mat.naziv }} {{ najjeftiniji_mat.boja }} koji kosta {{ najjeftiniji_mat.cena_po_metru }} din po metru. </p>
+			<p>Najskuplji materijal: {{ najskuplji_mat.naziv }} {{ najskuplji_mat.boja }} koji kosta {{ najskuplji_mat.cena_po_metru }} din po metru.</p>
+		</div>
+	</div>
 	<form action="{% url 'novi_materijal' %}" method="get">
 		{% csrf_token %}
 		<br>
