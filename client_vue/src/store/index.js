@@ -22,6 +22,9 @@ export default new Vuex.Store({
     },
     getUser: state => {
       return state.user;
+    },
+    isAdmin: state => {
+      return state.user.is_admin;
     }
   },
   mutations: {

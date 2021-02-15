@@ -36,6 +36,9 @@
             <p> {{ comment.username }} </p>
             <p> {{ comment.tekst }} </p>
             <small> {{ comment.postavljeno_datuma }} </small>
+            <div v-if="isAdmin === 1">
+                <b-button @click="brisiKomentar(comment.komentarID)" variant="danger">Obrisi</b-button>
+            </div>
             <br>
             <hr>
             <br>
@@ -53,7 +56,8 @@ export default {
             matstat: {
             },
             text: '',
-            comments: []
+            comments: [],
+            isAdmin: this.$store.getters.isAdmin
         };
     },
     mounted() {
@@ -83,8 +87,22 @@ export default {
 
                 }).catch((err) => console.log(err));
         },
+
         gotoKupovina() {
             this.$router.push(`/materijal/kupovina/${this.$route.params.id}`);
+        },
+
+        brisiKomentar(_id) {
+            console.log(_id);
+            axios.delete(`http://localhost:2999/api/komentar/`,
+            {
+                data: {
+                    id: _id,
+                },
+                    headers: {
+
+                }
+            });
         }
     }
 }

@@ -2,7 +2,6 @@
     <div id="app">
         <List />
         <h1>Cao {{ username }}</h1>
-        <p>{{ secretMessage }}</p>
     </div>
 </template>
 
@@ -13,7 +12,6 @@ export default {
     name: "Home",
     data() {
         return {
-            secretMessage: '',
             username: ''
         };
     },
@@ -21,8 +19,7 @@ export default {
         if (!this.$store.getters.isLoggedIn) {
             this.$router.push('/login');
         }
-        this.username = this.$store.getters.getUsername;
-        this.secretMessage = await AuthService.getSecret();
+        this.username = this.$store.getters.getUser.username;
     },
     methods: {
     },

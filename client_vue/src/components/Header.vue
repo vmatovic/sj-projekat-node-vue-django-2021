@@ -19,6 +19,7 @@
                 <a class="nav-link active" aria-current="page" href="/login">Prijavljivanje</a>
             </div>
             <div v-else>
+                <a v-if="this.$store.getters.isAdmin === 1" class="active" aria-current="page" href="/korisnici">Svi korisnici</a>
                 <b-dropdown id="dropdown-header" text="Nalog" class="m-2">
                     <b-dropdown-header id="dropdown-header-label">
                     {{ this.$store.getters.getUser.username }}
@@ -40,12 +41,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 export default {
     name: "Header",
-    computed: {
-        ...mapState(['messages'])
-    },
     methods: {
         logout() {
             this.$store.dispatch('logout');
@@ -62,5 +59,10 @@ export default {
 </script>
 
 <style scoped>
+
+a {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
 </style>

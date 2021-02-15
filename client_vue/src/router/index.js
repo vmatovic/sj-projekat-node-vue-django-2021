@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import SignUp from '@/views/SignUp.vue'
 import LogIn from '@/views/LogIn.vue'
+import UserStranica from '@/views/UserStranica.vue'
 import Profilna from '@/views/ProfilnaStranica.vue'
 import Narudzbine from '@/views/NarudzbineStranica.vue'
 import Materijali from '@/views/Materijali.vue'
@@ -27,6 +28,11 @@ const routes = [
     path: '/profil',
     name: 'ProfilnaStranica',
     component: Profilna
+  },
+  {
+    path: '/korisnici',
+    name: 'UserStranica',
+    component: UserStranica
   },
   {
     path: '/narudzbine',

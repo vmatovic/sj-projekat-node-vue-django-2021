@@ -96,6 +96,20 @@ router.post('/login', (req, res, next) => {
     );
 });
 
+router.get('/korisnici', (req, res, next) => {
+    db.query('SELECT * FROM korisnici;',
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return res.status(200).send({
+            res: result
+        });
+    });
+});
+
 router.get('/materijali', (req, res, next) => {
     db.query('SELECT * FROM materijali;',
     (err, result) => {
@@ -244,7 +258,7 @@ router.delete('/komentar', (req, res, next) => {
 });
 
 router.get('/materijal/komentari/:id', (req, res, next) => {
-    db.query(`SELECT korisnici.username, komentari.tekst, komentari.postavljeno_datuma FROM komentari INNER JOIN korisnici ON komentari.korisnikID = korisnici.id WHERE komentari.materijalID = ${req.params.id} ORDER BY komentari.postavljeno_datuma DESC;`,
+    db.query(`SELECT * FROM komentari INNER JOIN korisnici ON komentari.korisnikID = korisnici.id WHERE komentari.materijalID = ${req.params.id} ORDER BY komentari.postavljeno_datuma DESC;`,
     (err, result) => {
         if (err) {
             console.log(err);
