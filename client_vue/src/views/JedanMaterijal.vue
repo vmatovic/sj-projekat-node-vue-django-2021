@@ -19,6 +19,7 @@
             max-rows="6"
             ></b-form-textarea>
             <b-button @click="postComment" variant="success">Objavite komentar</b-button>
+            <p class="text-danger"> {{ error_msg }} </p>
         </div>
         <div v-else>
             <b-form-textarea
@@ -48,6 +49,7 @@
 
 <script>
 import axios from 'axios';
+import Joi from 'joi';
 
 export default {
     name: "JedanMaterijal",
@@ -55,6 +57,7 @@ export default {
         return {
             matstat: {
             },
+            error_msg: '',
             text: '',
             comments: [],
             isAdmin: this.$store.getters.isAdmin
@@ -74,18 +77,32 @@ export default {
             this.comments = data.res;
         },
         postComment() {
+            const schema = Joi.object().keys({
+                tekst: Joi.string().min(3).max(500),
+                korID: Joi.string(),
+                matID: Joi.number().integer()
+            });
+
             const fullComment = {
                 tekst: this.text,
                 korID: this.$store.getters.getUser.id,
                 matID: this.$route.params.id
             };
 
-            axios.post('http://localhost:2999/api/komentar', fullComment)
-                .then((res) => { 
-                        
-                    this.$router.push(`/materijal/${this.$route.params.id}`);
+            const result = schema.validate(fullComment);
 
-                }).catch((err) => console.log(err));
+            if (result.error != null) {
+                this.error_msg = 'Komentar nije validan.'
+            }
+            else {
+                this.error_msg = 'Uspesno!';
+                axios.post('http://localhost:2999/api/komentar', fullComment)
+                    .then((res) => { 
+                            
+                        this.$router.push(`/materijal/${this.$route.params.id}`);
+
+                    }).catch((err) => console.log(err));
+            }
         },
 
         gotoKupovina() {

@@ -15,6 +15,7 @@ import JedanMebl from '@/views/JedanMebl.vue'
 import KupovinaMaterijala from '@/views/KupovinaMaterijala.vue'
 import KupovinaDugmeta from '@/views/KupovinaDugmeta.vue'
 import KupovinaMebla from '@/views/KupovinaMebla.vue'
+import NijePronadjeno from '@/views/NijePronadjeno.vue'
 
 Vue.use(VueRouter)
 
@@ -93,6 +94,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LogIn
+  },
+  {
+    path: '*',
+    name: 'NijePronadjeno',
+    component: NijePronadjeno
   }
 ]
 
