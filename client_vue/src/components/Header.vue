@@ -9,9 +9,9 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <b-dropdown id="dropdown-1" text="Izaberite kategoriju" variant="primary" class="m-md-2">
-                        <b-dropdown-item href="/materijali">Materijali</b-dropdown-item>
-                        <b-dropdown-item href="/dugmici">Dugmici</b-dropdown-item>
-                        <b-dropdown-item href="/namestaj">Mebl</b-dropdown-item>
+                        <b-dropdown-item href="/vmmaterijali">Materijali</b-dropdown-item>
+                        <b-dropdown-item href="/vmdugmici">Dugmici</b-dropdown-item>
+                        <b-dropdown-item href="/vmnamestaj">Mebl</b-dropdown-item>
                     </b-dropdown>
                 </li>
             </ul>
@@ -19,7 +19,7 @@
                 <a class="nav-link active" aria-current="page" href="/login">Prijavljivanje</a>
             </div>
             <div v-else>
-                <a v-if="this.$store.getters.isAdmin === 1" class="active" aria-current="page" href="/korisnici">Svi korisnici</a>
+                <a v-if="this.$store.getters.isAdmin === 1" class="active" aria-current="page" href="/vmkorisnici">Svi korisnici</a>
                 <b-dropdown id="dropdown-header" text="Nalog" class="m-2">
                     <b-dropdown-header id="dropdown-header-label">
                     {{ this.$store.getters.getUser.username }}

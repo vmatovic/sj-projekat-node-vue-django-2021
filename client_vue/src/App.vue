@@ -6,18 +6,10 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import Header from './components/Header.vue';
 export default {
   components: { Header },
-  name: 'App',
-  methods: {
-    ...mapActions(['load_messages'])
-
-  },
-  mounted: function() {
-    this.load_messages();
-  }
+  name: 'App'
 }
 </script>
 

@@ -1,8 +1,8 @@
 <template>
     <b-list-group>
-        <b-list-group-item href="/materijali">Materijali</b-list-group-item>
-        <b-list-group-item href="/dugmici">Dugmici</b-list-group-item>
-        <b-list-group-item href="/namestaj">Mebl</b-list-group-item>
+        <b-list-group-item href="/vmmaterijali">Materijali</b-list-group-item>
+        <b-list-group-item href="/vmdugmici">Dugmici</b-list-group-item>
+        <b-list-group-item href="/vmnamestaj">Mebl</b-list-group-item>
     </b-list-group>
 </template>
 

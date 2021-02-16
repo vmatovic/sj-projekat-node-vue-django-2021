@@ -99,7 +99,7 @@ export default {
                 axios.post('http://localhost:2999/api/komentar', fullComment)
                     .then((res) => { 
                             
-                        this.$router.push(`/materijal/${this.$route.params.id}`);
+                        this.$router.push(`/vmmaterijal/${this.$route.params.id}`);
 
                     }).catch((err) => console.log(err));
             }

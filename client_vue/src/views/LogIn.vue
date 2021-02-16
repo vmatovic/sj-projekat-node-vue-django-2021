@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import AuthService from '@/services/AuthService.js'
+import AuthService from '@/services/AuthService.js';
+import Joi from 'joi';
 
 export default {
     name: "LogIn",
@@ -26,19 +27,32 @@ export default {
     },
     methods: {
         async login() {
+            const schema = Joi.object().keys({
+                username: Joi.string().alphanum().min(3).max(30),
+                password: Joi.string().min(3).max(50),
+            });
             try {
+
                 const credentials = {
                     username: this.username,
                     password: this.password
                 };
-                const response = await AuthService.login(credentials);
-                this.msg = response.msg;
 
-                const token = response.token;
-                const user = response.user;
+                const result = schema.validate(credentials);
 
-                this.$store.dispatch('login', { token, user });
-                this.$router.push('/');
+                if (result.error != null) {
+                    this.msg = 'Unesite druge parametre.'
+                }
+                else {
+                    const response = await AuthService.login(credentials);
+                    this.msg = response.msg;
+
+                    const token = response.token;
+                    const user = response.user;
+
+                    this.$store.dispatch('login', { token, user });
+                    this.$router.push('/');
+                }
             } catch (error) {
                 this.msg = error.response.data.msg;
             }

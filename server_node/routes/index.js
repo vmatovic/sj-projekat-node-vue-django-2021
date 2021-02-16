@@ -8,6 +8,19 @@ const jwt = require('jsonwebtoken');
 const db = require('../db');
 const userMiddleware = require('../midware/users.js');
 
+const Joi = require('joi');
+
+const commentSchema = Joi.object().keys({
+    tekst: Joi.string().min(3).max(500),
+    korID: Joi.string(),
+    matID: Joi.number().integer()
+});
+
+const loginschema = Joi.object().keys({
+    username: Joi.string().alphanum().min(3).max(30),
+    password: Joi.string().min(3).max(50)
+});
+
 router.get('/', (req, res, next) => {
     res.json({ test: "test" });
 });
@@ -49,6 +62,15 @@ router.post('/sign-up', userMiddleware.validateRegister, (req, res, next) => {
 
 
 router.post('/login', (req, res, next) => {
+
+    const result = loginschema.validate(req.body);
+
+    if (result.error != null) {
+        return res.status(400).send({
+            msg: 'Neispravan login'
+        });
+    }
+
     db.query(
         `SELECT * FROM korisnici WHERE username = ${db.escape(req.body.username)};`,
         (err, result) => {
@@ -230,6 +252,15 @@ router.post('/namestaj/placanje/:id', userMiddleware.mozeNamestaj, (req, res, ne
 });
 
 router.post('/komentar', (req, res, next) => {
+    
+    const result = commentSchema.validate(req.body);
+
+    if (result.error != null) {
+        return res.status(400).send({
+            msg: 'Neispravan komentar'
+        });
+    }
+
     db.query(`INSERT INTO komentari (komentarID, tekst, korisnikID, materijalID, postavljeno_datuma) VALUES ('${uuid.v4()}', '${req.body.tekst}', '${req.body.korID}', ${req.body.matID}, now());`,
     (err, result) => {
         if (err) {

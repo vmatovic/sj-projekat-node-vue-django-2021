@@ -31,7 +31,7 @@ const routes = [
     component: Profilna
   },
   {
-    path: '/korisnici',
+    path: '/vmkorisnici',
     name: 'UserStranica',
     component: UserStranica
   },
@@ -41,22 +41,22 @@ const routes = [
     component: Narudzbine
   },
   {
-    path: '/materijali',
+    path: '/vmmaterijali',
     name: 'Materijali',
     component: Materijali
   },
   {
-    path: '/materijal/:id',
+    path: '/vmmaterijal/:id',
     name: 'JedanMaterijal',
     component: JedanMaterijal
   },
   {
-    path: '/dugme/:id',
+    path: '/vmdugme/:id',
     name: 'JednoDugme',
     component: JednoDugme
   },
   {
-    path: '/namestaj/:id',
+    path: '/vmnamestaj/:id',
     name: 'JedanMebl',
     component: JedanMebl
   },
@@ -76,12 +76,12 @@ const routes = [
     component: KupovinaMebla
   },
   {
-    path: '/dugmici',
+    path: '/vmdugmici',
     name: 'Dugmici',
     component: Dugmici
   },
   {
-    path: '/namestaj',
+    path: '/vmnamestaj',
     name: 'Namestaj',
     component: Namestaj
   },
@@ -94,11 +94,6 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LogIn
-  },
-  {
-    path: '*',
-    name: 'NijePronadjeno',
-    component: NijePronadjeno
   }
 ]
 

@@ -74,8 +74,13 @@ module.exports = {
             var { preostala_duzina } = result[0];
             const num = parseInt(preostala_duzina);
             const order = parseInt(req.body.amt);
-            console.log(num);
-            console.log(order);
+
+            if (order < 0) {
+                return res.status(200).send({
+                    msg: 'Ne moze negativan broj.'
+                });
+            }
+
             if (order > num) {
                 return res.status(200).send({
                     msg: 'Prekoracili ste granicu.'
@@ -99,6 +104,13 @@ module.exports = {
             var { kolicina } = result[0];
             const num = parseInt(kolicina);
             const order = parseInt(req.body.amt);
+
+            if (order < 0) {
+                return res.status(200).send({
+                    msg: 'Ne moze negativan broj.'
+                });
+            }
+
             if (order > num) {
                 return res.status(200).send({
                     msg: 'Prekoracili ste granicu.'
@@ -122,6 +134,13 @@ module.exports = {
             var { preostala_duzina } = result[0];
             const num = parseInt(preostala_duzina);
             const order = parseInt(req.body.amt);
+
+            if (order < 0) {
+                return res.status(200).send({
+                    msg: 'Ne moze negativan broj.'
+                });
+            }
+
             if (order > num) {
                 return res.status(200).send({
                     msg: 'Prekoracili ste granicu.'

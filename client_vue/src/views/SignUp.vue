@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import AuthService from '@/services/AuthService.js'
+import AuthService from '@/services/AuthService.js';
+import Joi from 'joi';
 
 export default {
     name: "SignUp",
@@ -26,6 +27,12 @@ export default {
     },
     methods: {
         async signUp() {
+            const schema = Joi.object().keys({
+                username: Joi.string().alphanum().min(3).max(30),
+                email: Joi.string().min(4).pattern(new RegExp('^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]+$')),
+                password: Joi.string().min(3).max(50),
+                password_confirmation: Joi.string().min(3).max(50)
+            });
             try {
                 const credentials = {
                     username: this.username,
@@ -33,8 +40,15 @@ export default {
                     password: this.password,
                     password_confirmation: this.password_confirmation
                 };
-                const response = await AuthService.signUp(credentials);
-                this.msg = response.msg;
+                const result = schema.validate(credentials);
+
+                if (result.error != null) {
+                    this.msg = 'Unesite druge parametre.'
+                }
+                else {
+                    const response = await AuthService.signUp(credentials);
+                    this.msg = response.msg;
+                }
             } catch (error) {
                 this.msg = error.response.data.msg;
             }

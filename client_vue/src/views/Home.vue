@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import AuthService from '@/services/AuthService.js';
 import List from '@/components/List';
 export default {
     name: "Home",
