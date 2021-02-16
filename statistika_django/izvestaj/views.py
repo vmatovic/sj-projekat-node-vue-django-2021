@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from django.db.models import Avg, Min, Max, Sum
 import datetime
@@ -195,3 +195,51 @@ def izbrisi_mebl(request, id):
 	mebl = MaterijaliNamestaj.objects.get(m_namestajid=id)
 	mebl.delete()
 	return redirect('meblovi')
+
+def statistika(request):
+	return render(request, 'statistika.html')
+
+def stat_mat(request):
+	stat_materijal = Narudzbina.objects.exclude(materijal__isnull=True).values('datum_narucivanja').annotate(uk_kolicina=Sum('kolicina')).order_by('datum_narucivanja')
+	
+	labele_mat = []
+	data_mat = []
+	
+	for mat in stat_materijal:
+		labele_mat.append(mat['datum_narucivanja'])
+		data_mat.append(mat['uk_kolicina'])
+	
+	return JsonResponse(data={
+		'labele_mat': labele_mat,
+		'data_mat': data_mat
+	})
+
+def stat_dug(request):
+	stat_dugmici = Narudzbina.objects.exclude(dugmici__isnull=True).values('datum_narucivanja').annotate(uk_kolicina=Sum('kolicina')).order_by('datum_narucivanja')
+	
+	labele_dug = []
+	data_dug = []
+	
+	for dug in stat_dugmici:
+		labele_dug.append(dug['datum_narucivanja'])
+		data_dug.append(dug['uk_kolicina'])
+	
+	return JsonResponse(data={
+		'labele_dug': labele_dug,
+		'data_dug': data_dug
+	})
+
+def stat_mebl(request):
+	stat_mebl = Narudzbina.objects.exclude(m_namestaj__isnull=True).values('datum_narucivanja').annotate(uk_kolicina=Sum('kolicina')).order_by('datum_narucivanja')
+	
+	labele_mebl = []
+	data_mebl = []
+	
+	for mebl in stat_mebl:
+		labele_mebl.append(mebl['datum_narucivanja'])
+		data_mebl.append(mebl['uk_kolicina'])
+	
+	return JsonResponse(data={
+		'labele_mebl': labele_mebl,
+		'data_mebl': data_mebl
+	})

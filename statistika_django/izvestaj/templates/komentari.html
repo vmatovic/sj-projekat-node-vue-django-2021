@@ -7,16 +7,6 @@
 <div class="container">
   <div class="row">
     <div class="col">
-	  <div class="dropdown">
-		  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Rejting
-		  </button>
-		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="#">Pozitivni</a>
-			<a class="dropdown-item" href="#">Negativni</a>
-		  </div>
-	  </div>
-	  <br>
       <ul class="list-group">
 		  <li class="list-group-item disabled" aria-disabled="true">Komentari danas</li>
 		  {% if not komentari_danas %}
@@ -27,20 +17,8 @@
 			  {% endfor %}
 		  {% endif %}
 		</ul>
-	<p class="text-success">Broj pozitivnih komentara danas: 0</p>
-	<p class="text-danger">Broj negativnih komentara danas: 0</p>
     </div>
     <div class="col">
-	<div class="dropdown">
-		  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Rejting
-		  </button>
-		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="#">Pozitivni</a>
-			<a class="dropdown-item" href="#">Negativni</a>
-		  </div>
-	  </div>
-	  <br>
       <ul class="list-group">
 		  <li class="list-group-item disabled" aria-disabled="true">Svi komentari</li>
 		  {% if not komentari %}
@@ -51,8 +29,6 @@
 			  {% endfor %}
 		  {% endif %}
 		</ul>
-	<p class="text-success">Ukupan broj pozitivnih komentara: 0</p>
-	<p class="text-danger">Ukupan broj negativnih komentara: 0</p>
     </div>
   </div>
     <br>

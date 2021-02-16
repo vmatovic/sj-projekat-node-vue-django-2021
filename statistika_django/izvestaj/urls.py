@@ -6,6 +6,7 @@ urlpatterns = [
 	path('korisnici', views.korisnici, name='korisnici'),
 	path('korisnici/komentari', views.korisnici_komentari, name='korisnici_komentari'),
 	path('korisnici/narudzbine', views.korisnici_narudzbine, name='korisnici_narudzbine'),
+	path('korisnici/narudzbine/statistika', views.statistika, name='statistika'),
 	path('izbrisi/korisnik/<str:id>', views.izbrisi_korisnika, name='korisnici_brisanje'),
 	path('izbrisi/narudzbina/<str:id>', views.izbrisi_narudzbinu, name='izbrisi_narudzbinu'),
 	path('izbrisi/materijal/<int:id>', views.izbrisi_materijal, name='izbrisi_materijal'),
@@ -20,5 +21,8 @@ urlpatterns = [
 	path('dugmici/izmeni/<int:id>', views.izmeni_dugme, name='izmeni_dugme'),
 	path('meblovi', views.meblovi, name='meblovi'),
 	path('meblovi/novo', views.novi_mebl, name='novi_mebl'),
-	path('meblovi/izmeni/<int:id>', views.izmeni_mebl, name='izmeni_mebl')
+	path('meblovi/izmeni/<int:id>', views.izmeni_mebl, name='izmeni_mebl'),
+	path('statistika/materijali', views.stat_mat, name='stat_mat'),
+	path('statistika/dugmici', views.stat_dug, name='stat_dug'),
+	path('statistika/mebl', views.stat_mebl, name='stat_mebl'),
 ]
