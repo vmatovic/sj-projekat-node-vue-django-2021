@@ -2,6 +2,11 @@
 
 {% block content %}
 
+{% if error %}
+	<i style="color: red">{{ error }}</i>
+	<br>
+{% endif %}
+
 <form action="{% url 'novi_materijal' %}" method="post">
 		{% csrf_token %}
 		<table border="1" style="width: 30%;">

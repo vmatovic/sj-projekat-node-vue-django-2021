@@ -11,8 +11,8 @@ from django.db import models
 class Dugmici(models.Model):
     dugmiciid = models.IntegerField(db_column='dugmiciID', primary_key=True)  # Field name made lowercase.
     boja = models.CharField(max_length=50)
-    kolicina = models.IntegerField()
-    cena_deset_dugmica = models.IntegerField()
+    kolicina = models.PositiveIntegerField()
+    cena_deset_dugmica = models.PositiveIntegerField()
 
     class Meta:
         managed = False
@@ -37,8 +37,8 @@ class Materijali(models.Model):
     materijalid = models.IntegerField(db_column='materijalID', primary_key=True)  # Field name made lowercase.
     naziv = models.CharField(max_length=50)
     boja = models.CharField(max_length=50)
-    preostala_duzina = models.IntegerField()
-    cena_po_metru = models.IntegerField()
+    preostala_duzina = models.PositiveIntegerField()
+    cena_po_metru = models.PositiveIntegerField()
 
     class Meta:
         managed = False
@@ -48,8 +48,8 @@ class Materijali(models.Model):
 class MaterijaliNamestaj(models.Model):
     m_namestajid = models.IntegerField(db_column='m_namestajID', primary_key=True)  # Field name made lowercase.
     boja = models.CharField(max_length=50)
-    preostala_duzina = models.IntegerField()
-    cena_deset_metara = models.IntegerField()
+    preostala_duzina = models.PositiveIntegerField()
+    cena_deset_metara = models.PositiveIntegerField()
 
     class Meta:
         managed = False
@@ -62,7 +62,7 @@ class Narudzbina(models.Model):
     materijal = models.ForeignKey(Materijali, db_column='materijaliID', blank=True, null=True, on_delete=models.DO_NOTHING)  # Field name made lowercase.
     dugmici = models.ForeignKey(Dugmici, db_column='dugmiciID', blank=True, null=True, on_delete=models.DO_NOTHING)  # Field name made lowercase.
     m_namestaj = models.ForeignKey(MaterijaliNamestaj, db_column='m_namestajID', blank=True, null=True, on_delete=models.DO_NOTHING)  # Field name made lowercase.
-    kolicina = models.IntegerField()
+    kolicina = models.PositiveIntegerField()
     datum_narucivanja = models.DateField()
     isporuceno = models.BooleanField(default=False)
 

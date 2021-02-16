@@ -94,13 +94,13 @@ def novi_materijal(request):
 			return redirect('materijali')
 		else:
 			form = MaterijaliForm()
-			return render(request, 'materijal_forma.html', {'form': form})
+			return render(request, 'materijal_forma.html', {'form': form, 'error': 'Problem u dodavanju. Pokusajte ponovo.'})
 	else:
 		form = MaterijaliForm()
 		return render(request, 'materijal_forma.html', {'form': form})
 
 def izmeni_materijal(request, id):
-	mat = Materijali.objects.get(materijalid=id)
+	mat = get_object_or_404(Materijali, pk=id)
 	if request.method == 'POST':
 		form = MaterijaliForm(request.POST)
 		if form.is_valid():
@@ -112,7 +112,7 @@ def izmeni_materijal(request, id):
 			return redirect('materijali')
 		else:
 			form = MaterijaliForm(instance=mat)
-			return render(request, 'materijal_forma_izmeni.html', {'form': form, 'id': id})
+			return render(request, 'materijal_forma_izmeni.html', {'form': form, 'id': id, 'error': 'Problem u izmeni. Pokusajte ponovo.'})
 	else:
 		form = MaterijaliForm(instance=mat)
 		return render(request, 'materijal_forma_izmeni.html', {'form': form, 'id': id})
@@ -132,13 +132,13 @@ def novo_dugme(request):
 			return redirect('dugmici')
 		else:
 			form = DugmiciForm()
-			return render(request, 'dugme_forma.html', {'form': form})
+			return render(request, 'dugme_forma.html', {'form': form, 'error': 'Problem u dodavanju. Pokusajte ponovo.'})
 	else:
 		form = DugmiciForm()
 		return render(request, 'dugme_forma.html', {'form': form})
 
 def izmeni_dugme(request, id):
-	dug = Dugmici.objects.get(dugmiciid=id)
+	dug = get_object_or_404(Dugmici, pk=id)
 	if request.method == 'POST':
 		form = DugmiciForm(request.POST)
 		if form.is_valid():
@@ -149,7 +149,7 @@ def izmeni_dugme(request, id):
 			return redirect('dugmici')
 		else:
 			form = DugmiciForm(instance=dug)
-			return render(request, 'dugme_forma_izmeni.html', {'form': form, 'id': id})
+			return render(request, 'dugme_forma_izmeni.html', {'form': form, 'id': id, 'error': 'Problem u izmeni. Pokusajte ponovo.'})
 	else:
 		form = DugmiciForm(instance=dug)
 		return render(request, 'dugme_forma_izmeni.html', {'form': form, 'id': id})
@@ -169,13 +169,13 @@ def novi_mebl(request):
 			return redirect('meblovi')
 		else:
 			form = MeblForm()
-			return render(request, 'mebl_forma.html', {'form': form})
+			return render(request, 'mebl_forma.html', {'form': form, 'error': 'Problem u dodavanju. Pokusajte ponovo.'})
 	else:
 		form = MeblForm()
 		return render(request, 'mebl_forma.html', {'form': form})
 
 def izmeni_mebl(request, id):
-	mebl = MaterijaliNamestaj.objects.get(m_namestajid=id)
+	mebl = get_object_or_404(MaterijaliNamestaj, pk=id)
 	if request.method == 'POST':
 		form = MeblForm(request.POST)
 		if form.is_valid():
@@ -186,7 +186,7 @@ def izmeni_mebl(request, id):
 			return redirect('meblovi')
 		else:
 			form = MeblForm(instance=mebl)
-			return render(request, 'mebl_forma_izmeni.html', {'form': form, 'id': id})
+			return render(request, 'mebl_forma_izmeni.html', {'form': form, 'id': id, 'error': 'Problem u izmeni. Pokusajte ponovo.'})
 	else:
 		form = MeblForm(instance=mebl)
 		return render(request, 'mebl_forma_izmeni.html', {'form': form, 'id': id})
